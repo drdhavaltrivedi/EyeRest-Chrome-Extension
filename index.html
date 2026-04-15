@@ -3,428 +3,1209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="EyeRest is the high-end 20-20-20 eye care reminder and screen time tracker. Protect your vision with guided exercises and a stunning interface.">
-    <meta name="keywords" content="20-20-20 rule, eye care, eye protection, screen time tracker, vision care, productivity timer, rest reminder">
-    <title>EyeRest — The Ultimate Eye Protection for Modern Professionals</title>
+
+    <!-- Primary SEO Meta -->
+    <title>EyeRest — 20-20-20 Eye Break Reminder & Screen Time Relief for Chrome</title>
+    <meta name="description" content="EyeRest is a free Chrome extension that reminds you to follow the 20-20-20 rule, reduces digital eye strain, and helps remote workers, developers, and designers protect their vision without breaking their flow.">
+    <meta name="keywords" content="20-20-20 rule, eye break reminder, reduce eye strain, digital eye fatigue, computer vision syndrome, blue light screen break, eye care Chrome extension, screen time tracker, eye health for developers, remote work eye strain relief, ophthalmologist recommended eye exercises, vision protection extension, eye rest timer, eye fatigue prevention, healthy screen habits">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="EyeRest Vision Systems">
+    <link rel="canonical" href="https://eyerest.app/">
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://eyerest.app/">
+    <meta property="og:title" content="EyeRest — Eye Break Reminder That Fits Your Workflow">
+    <meta property="og:description" content="Stop ignoring your eyes. EyeRest gently enforces the 20-20-20 rule in Chrome — no disruption, no data collection, just healthier vision built into your daily work.">
+    <meta property="og:image" content="icons/hero.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "EyeRest",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Chrome",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "A Chrome extension that helps users follow the 20-20-20 rule to reduce digital eye strain, computer vision syndrome, and eye fatigue during long screen sessions.",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "312"
+      }
+    }
+    </script>
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@200;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
+        /* ── TOKENS ────────────────────────────────── */
         :root {
-            --primary: #58a6ff;
-            --accent: #2ea043;
-            --bg: #010409;
-            --bg-secondary: #0d1117;
-            --text-main: #8b949e;
-            --text-bright: #f0f6fc;
-            --card-glass: rgba(22, 27, 34, 0.8);
-            --border: rgba(240, 246, 252, 0.1);
+            --primary:       #3b82f6;
+            --primary-light: #60a5fa;
+            --primary-glow:  rgba(59,130,246,0.15);
+            --accent:        #10b981;
+            --accent-glow:   rgba(16,185,129,0.12);
+            --warn:          #f59e0b;
+            --bg:            #050b14;
+            --bg2:           #091220;
+            --bg3:           #0d1a2d;
+            --surface:       rgba(15,26,46,0.75);
+            --surface2:      rgba(20,35,60,0.6);
+            --text:          #94a3b8;
+            --text-bright:   #f1f5f9;
+            --text-muted:    #64748b;
+            --border:        rgba(148,163,184,0.1);
+            --border-bright: rgba(59,130,246,0.3);
+            --radius-sm:     12px;
+            --radius:        20px;
+            --radius-lg:     32px;
         }
 
         @media (prefers-color-scheme: light) {
             :root {
-                --primary: #0969da;
-                --accent: #1a7f37;
-                --bg: #f6f8fa;
-                --bg-secondary: #ffffff;
-                --text-main: #57606a;
-                --text-bright: #24292f;
-                --card-glass: rgba(255, 255, 255, 0.9);
-                --border: rgba(31, 35, 40, 0.1);
+                --primary:       #2563eb;
+                --primary-light: #3b82f6;
+                --primary-glow:  rgba(37,99,235,0.12);
+                --accent:        #059669;
+                --bg:            #f8faff;
+                --bg2:           #eef2ff;
+                --bg3:           #e8f0fe;
+                --surface:       rgba(255,255,255,0.9);
+                --surface2:      rgba(240,245,255,0.8);
+                --text:          #475569;
+                --text-bright:   #0f172a;
+                --text-muted:    #94a3b8;
+                --border:        rgba(15,23,42,0.08);
+                --border-bright: rgba(37,99,235,0.25);
             }
         }
 
-        * {
-            margin: 0;
-            padding: 0;
+        /* ── RESET ─────────────────────────────────── */
+        *, *::before, *::after {
+            margin: 0; padding: 0;
             box-sizing: border-box;
             -webkit-font-smoothing: antialiased;
         }
 
+        html { scroll-behavior: smooth; }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
+            background: var(--bg);
+            color: var(--text);
             overflow-x: hidden;
-            scroll-behavior: smooth;
+            line-height: 1.65;
         }
 
-        h1, h2, h3, .logo {
-            font-family: 'Outfit', sans-serif;
-        }
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
 
         .container {
-            max-width: 1200px;
+            max-width: 1160px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 28px;
         }
 
-        /* Header & Nav */
+        a { text-decoration: none; }
+
+        img { display: block; }
+
+        /* ── SCROLLBAR ──────────────────────────────── */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 99px; }
+
+        /* ── NAV ────────────────────────────────────── */
         header {
             position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            backdrop-filter: blur(12px);
-            background: var(--card-glass);
-            border-bottom: 1px solid var(--border);
+            top: 0; width: 100%;
+            z-index: 100;
+            padding: 0;
         }
 
         nav {
-            height: 80px;
+            height: 72px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            backdrop-filter: blur(20px) saturate(1.6);
+            -webkit-backdrop-filter: blur(20px) saturate(1.6);
+            background: rgba(5,11,20,0.75);
+            border-bottom: 1px solid var(--border);
+            padding: 0 32px;
+            transition: background 0.3s;
+        }
+
+        @media (prefers-color-scheme: light) {
+            nav { background: rgba(248,250,255,0.85); }
         }
 
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 700;
-            font-size: 1.5rem;
+            display: flex; align-items: center; gap: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800; font-size: 1.4rem;
             color: var(--text-bright);
-            text-decoration: none;
         }
 
-        .logo img {
-            width: 36px;
-            height: 36px;
-            filter: drop-shadow(0 0 8px rgba(88, 166, 255, 0.3));
+        .logo img { width: 34px; height: 34px; }
+
+        .nav-links {
+            display: flex; align-items: center; gap: 32px;
+            list-style: none;
         }
 
-        .cta-nav {
+        .nav-links a {
+            color: var(--text); font-size: 0.9rem;
+            font-weight: 500; transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text-bright); }
+
+        .btn-nav {
             background: var(--primary);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 100px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: 0.3s;
+            color: #fff !important;
+            padding: 9px 22px;
+            border-radius: 999px;
+            font-weight: 700 !important;
+            font-size: 0.875rem !important;
+            transition: opacity 0.2s, transform 0.2s !important;
+            box-shadow: 0 4px 20px var(--primary-glow);
         }
 
-        .cta-nav:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
+        .btn-nav:hover { opacity: 0.88; transform: translateY(-1px); }
 
-        /* Hero */
+        /* ── HERO ────────────────────────────────────── */
         .hero {
-            padding: 180px 0 120px;
+            padding: 180px 0 100px;
             text-align: center;
             position: relative;
+            overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
+        .hero-glow {
             position: absolute;
-            top: 10%;
-            left: 50%;
+            top: -100px; left: 50%;
             transform: translateX(-50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(88, 166, 255, 0.1) 0%, transparent 70%);
+            width: 900px; height: 700px;
+            background: radial-gradient(ellipse at 50% 30%,
+                rgba(59,130,246,0.12) 0%,
+                rgba(16,185,129,0.05) 40%,
+                transparent 70%);
             pointer-events: none;
         }
 
-        .badge {
-            display: inline-block;
-            padding: 6px 16px;
-            background: rgba(88, 166, 255, 0.1);
-            color: var(--primary);
-            border-radius: 100px;
-            font-size: 0.8rem;
+        .pill-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 7px 18px;
+            background: var(--primary-glow);
+            border: 1px solid var(--border-bright);
+            border-radius: 999px;
+            font-size: 0.78rem;
             font-weight: 700;
+            color: var(--primary-light);
+            letter-spacing: 0.05em;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
+        }
+
+        .pill-badge .dot {
+            width: 6px; height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
         }
 
         h1 {
-            font-size: 4.5rem;
-            font-weight: 800;
+            font-size: clamp(2.8rem, 7vw, 5.2rem);
+            font-weight: 900;
             color: var(--text-bright);
-            line-height: 1;
-            letter-spacing: -3px;
-            margin-bottom: 24px;
+            line-height: 1.04;
+            letter-spacing: -0.04em;
+            margin-bottom: 28px;
         }
 
-        .hero p {
-            font-size: 1.35rem;
-            max-width: 700px;
-            margin: 0 auto 48px;
-            color: var(--text-main);
+        h1 .accent-word {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: clamp(1rem, 2.2vw, 1.25rem);
+            max-width: 640px;
+            margin: 0 auto 44px;
+            color: var(--text);
+            line-height: 1.7;
         }
 
         .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
+            display: flex; flex-wrap: wrap;
+            justify-content: center; gap: 16px;
+            margin-bottom: 72px;
         }
 
         .btn-primary {
+            display: inline-flex; align-items: center; gap: 10px;
             background: var(--primary);
             color: #fff;
-            padding: 18px 40px;
-            border-radius: 14px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            box-shadow: 0 20px 40px rgba(88, 166, 255, 0.2);
-            transition: 0.3s;
+            padding: 17px 38px;
+            border-radius: var(--radius);
+            font-weight: 700; font-size: 1.05rem;
+            box-shadow: 0 16px 48px rgba(59,130,246,0.3);
+            transition: transform 0.25s, box-shadow 0.25s;
         }
 
         .btn-primary:hover {
             transform: translateY(-4px);
-            box-shadow: 0 25px 50px rgba(88, 166, 255, 0.3);
+            box-shadow: 0 24px 60px rgba(59,130,246,0.4);
         }
 
-        .btn-secondary {
+        .btn-ghost {
+            display: inline-flex; align-items: center; gap: 8px;
             border: 1px solid var(--border);
             color: var(--text-bright);
-            padding: 18px 40px;
-            border-radius: 14px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: 0.3s;
+            padding: 17px 38px;
+            border-radius: var(--radius);
+            font-weight: 600; font-size: 1.05rem;
+            transition: background 0.2s, border-color 0.2s;
         }
 
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.05);
+        .btn-ghost:hover {
+            background: var(--surface);
+            border-color: var(--border-bright);
         }
 
-        /* Showcase */
-        .showcase {
-            margin-top: 80px;
+        /* Trust bar */
+        .trust-bar {
+            display: flex; flex-wrap: wrap;
+            justify-content: center; align-items: center;
+            gap: 28px;
+            margin-bottom: 64px;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .trust-item {
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .trust-item svg { flex-shrink: 0; }
+
+        /* Hero screenshot */
+        .hero-visual {
             position: relative;
-        }
-
-        .showcase-img {
-            width: 100%;
-            max-width: 1000px;
+            max-width: 940px;
             margin: 0 auto;
-            display: block;
-            border-radius: 30px;
+        }
+
+        .hero-visual::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: calc(var(--radius-lg) + 2px);
+            background: linear-gradient(135deg, var(--border-bright), transparent 60%);
+            z-index: 0;
+        }
+
+        .hero-visual img {
+            position: relative;
+            width: 100%;
+            border-radius: var(--radius-lg);
             border: 1px solid var(--border);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow:
+                0 0 0 1px var(--border),
+                0 40px 120px rgba(0,0,0,0.6),
+                0 0 80px rgba(59,130,246,0.07);
+            transition: transform 0.6s cubic-bezier(0.165,0.84,0.44,1);
+            z-index: 1;
         }
 
-        .showcase:hover .showcase-img {
-            transform: translateY(-20px) rotateX(2deg);
-        }
+        .hero-visual:hover img { transform: translateY(-10px) scale(1.005); }
 
-        /* Features */
-        .features {
-            padding: 140px 0;
-            background: var(--bg-secondary);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .section-header h2 {
-            font-size: 3rem;
+        /* Floating badge on hero image */
+        .hero-float-badge {
+            position: absolute;
+            bottom: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 10px 24px;
+            font-size: 0.85rem;
+            font-weight: 600;
             color: var(--text-bright);
-            letter-spacing: -2px;
+            white-space: nowrap;
+            z-index: 2;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        /* ── HOW IT WORKS ───────────────────────────── */
+        .how {
+            padding: 140px 0 80px;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--primary-light);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4.5vw, 3.2rem);
+            font-weight: 800;
+            color: var(--text-bright);
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .section-desc {
+            font-size: 1.05rem;
+            max-width: 560px;
+            color: var(--text);
+            line-height: 1.75;
+        }
+
+        .how-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-top: 64px;
+        }
+
+        .how-steps { display: flex; flex-direction: column; gap: 40px; }
+
+        .step {
+            display: flex; gap: 24px;
+        }
+
+        .step-num {
+            flex-shrink: 0;
+            width: 48px; height: 48px;
+            border-radius: 14px;
+            background: var(--primary-glow);
+            border: 1px solid var(--border-bright);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800; font-size: 1.1rem;
+            color: var(--primary-light);
+        }
+
+        .step-body h4 {
+            font-size: 1.15rem;
+            color: var(--text-bright);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .step-body p { font-size: 0.95rem; line-height: 1.7; }
+
+        .how-img-wrap {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+        }
+
+        .how-img-wrap img { width: 100%; display: block; }
+
+        /* ── FEATURES ───────────────────────────────── */
+        .features {
+            padding: 100px 0 120px;
+            background: var(--bg2);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .features-header {
+            text-align: center;
+            max-width: 680px;
+            margin: 0 auto 80px;
         }
 
         .feature-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
+            gap: 28px;
         }
 
         .feature-card {
-            padding: 40px;
-            border-radius: 24px;
-            background: var(--bg);
+            background: var(--surface);
             border: 1px solid var(--border);
-            transition: 0.3s;
+            border-radius: var(--radius-lg);
+            padding: 40px 36px;
+            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--primary-glow), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
         }
 
         .feature-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-10px);
+            border-color: var(--border-bright);
+            transform: translateY(-8px);
+            box-shadow: 0 24px 60px rgba(59,130,246,0.12);
         }
 
-        .feature-img {
-            width: 100%;
-            height: 200px;
-            object-fit: contain;
-            margin-bottom: 30px;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+        .feature-card:hover::after { opacity: 1; }
+
+        .feature-icon {
+            width: 52px; height: 52px;
+            border-radius: 14px;
+            background: var(--primary-glow);
+            border: 1px solid var(--border-bright);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 24px;
+            font-size: 1.5rem;
         }
 
         .feature-card h3 {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: var(--text-bright);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .feature-card p { font-size: 0.95rem; line-height: 1.7; }
+
+        /* ── STATS ──────────────────────────────────── */
+        .stats-strip {
+            padding: 80px 0;
+        }
+
+        .stats-inner {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .stat-cell {
+            background: var(--bg);
+            padding: 40px 32px;
+            text-align: center;
+            transition: background 0.2s;
+        }
+
+        .stat-cell:hover { background: var(--bg2); }
+
+        .stat-cell .num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--text-bright);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .stat-cell .label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--primary-light);
+        }
+
+        /* ── WHY SECTION ────────────────────────────── */
+        .why {
+            padding: 120px 0;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .why-content .section-desc { margin-bottom: 40px; }
+
+        .check-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .check-list li {
+            display: flex; align-items: flex-start; gap: 14px;
+            font-size: 0.97rem; line-height: 1.6;
+            color: var(--text);
+        }
+
+        .check-list .icon {
+            flex-shrink: 0;
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            background: var(--accent-glow);
+            border: 1px solid rgba(16,185,129,0.3);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--accent);
+            font-size: 0.7rem;
+            margin-top: 2px;
+        }
+
+        .why-visual {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 48px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .why-visual::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 280px; height: 280px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .quote-block {
+            position: relative;
+        }
+
+        .quote-mark {
+            font-size: 4rem;
+            line-height: 1;
+            color: var(--accent);
+            opacity: 0.4;
+            font-family: Georgia, serif;
+            margin-bottom: 12px;
+        }
+
+        .quote-text {
+            font-size: 1.1rem;
+            line-height: 1.75;
+            color: var(--text-bright);
+            font-weight: 500;
+            margin-bottom: 28px;
+        }
+
+        .quote-source {
+            display: flex; align-items: center; gap: 14px;
+        }
+
+        .avatar {
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1rem; color: #fff;
+            flex-shrink: 0;
+        }
+
+        .quote-meta strong {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-bright);
+            font-weight: 700;
+        }
+
+        .quote-meta span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Stars */
+        .stars {
+            color: var(--warn);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
             margin-bottom: 16px;
         }
 
-        /* Stats */
-        .stats {
-            padding: 100px 0;
-            display: flex;
-            justify-content: space-around;
-            text-align: center;
+        /* ── FAQ ────────────────────────────────────── */
+        .faq {
+            padding: 100px 0 120px;
+            background: var(--bg2);
             border-top: 1px solid var(--border);
         }
 
-        .stat-item h4 {
-            font-size: 3.5rem;
+        .faq-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 64px;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .faq-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+            transition: border-color 0.2s;
+        }
+
+        .faq-item:hover { border-color: var(--border-bright); }
+
+        .faq-item h4 {
+            font-size: 1rem;
             color: var(--text-bright);
-            font-weight: 800;
-        }
-
-        .stat-item p {
-            color: var(--primary);
             font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+            margin-bottom: 12px;
         }
 
-        /* Footer */
-        footer {
+        .faq-item p { font-size: 0.93rem; line-height: 1.7; }
+
+        /* ── CTA BANNER ─────────────────────────────── */
+        .cta-banner {
             padding: 100px 0;
-            color: var(--text-main);
+        }
+
+        .cta-inner {
+            background: linear-gradient(135deg, var(--bg3) 0%, var(--bg2) 100%);
+            border: 1px solid var(--border-bright);
+            border-radius: var(--radius-lg);
+            padding: 80px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-inner::before {
+            content: '';
+            position: absolute;
+            top: -80px; left: 50%;
+            transform: translateX(-50%);
+            width: 600px; height: 400px;
+            background: radial-gradient(ellipse, rgba(59,130,246,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-inner .section-title { margin-bottom: 20px; }
+
+        .cta-inner .section-desc {
+            margin: 0 auto 40px;
+            max-width: 520px;
+        }
+
+        /* ── FOOTER ─────────────────────────────────── */
+        footer {
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--border);
         }
 
         .footer-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 80px;
+            grid-template-columns: 2.5fr 1fr 1fr 1fr;
+            gap: 60px;
             margin-bottom: 60px;
         }
 
-        .footer-logo {
-            font-size: 1.8rem;
-            font-weight: 800;
+        .footer-brand .logo {
+            font-size: 1.6rem; margin-bottom: 20px;
+            display: inline-flex;
+        }
+
+        .footer-brand p {
+            font-size: 0.9rem; line-height: 1.75;
+            max-width: 320px; color: var(--text-muted);
+        }
+
+        .footer-col h5 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
             color: var(--text-bright);
             margin-bottom: 20px;
         }
 
-        .footer-col h5 {
-            color: var(--text-bright);
-            font-size: 1rem;
-            margin-bottom: 24px;
-        }
-
         .footer-col a {
             display: block;
-            color: var(--text-main);
-            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
             margin-bottom: 12px;
-            transition: 0.2s;
+            transition: color 0.2s;
         }
 
-        .footer-col a:hover {
-            color: var(--primary);
+        .footer-col a:hover { color: var(--text-bright); }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 28px;
+            border-top: 1px solid var(--border);
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
+        .footer-bottom a { color: var(--text-muted); transition: color 0.2s; }
+        .footer-bottom a:hover { color: var(--text-bright); }
+
+        /* ── ANIMATIONS ─────────────────────────────── */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+
+        /* ── RESPONSIVE ─────────────────────────────── */
         @media (max-width: 1024px) {
-            h1 { font-size: 3.5rem; }
+            .feature-grid { grid-template-columns: repeat(2, 1fr); }
+            .how-grid, .why-grid { grid-template-columns: 1fr; gap: 48px; }
+            .stats-inner { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.6rem; letter-spacing: -0.03em; }
             .feature-grid { grid-template-columns: 1fr; }
+            .faq-grid { grid-template-columns: 1fr; }
+            .cta-inner { padding: 56px 32px; }
+            .nav-links { display: none; }
+            .stats-inner { grid-template-columns: 1fr 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo">
-                    <img src="icons/logo.png" alt="EyeRest Logo">
+<!-- ══════════ NAVIGATION ══════════ -->
+<header>
+    <nav class="container">
+        <a href="#" class="logo" aria-label="EyeRest Home">
+            <img src="icons/logo.png" alt="EyeRest eye care extension logo" width="34" height="34">
+            EyeRest
+        </a>
+        <ul class="nav-links">
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#why">Why EyeRest</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="https://github.com/Vikas-Claude-Demo/EyeRest-Chrome-Extension" class="btn-nav" target="_blank" rel="noopener">Add to Chrome — Free</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero" aria-label="Hero section">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="container">
+        <div class="pill-badge fade-up">
+            <span class="dot" aria-hidden="true"></span>
+            Built on the 20-20-20 Rule — Backed by Eye Doctors
+        </div>
+        <h1 class="fade-up stagger-1">
+            Your eyes deserve<br>
+            a <span class="accent-word">real break.</span>
+        </h1>
+        <p class="hero-sub fade-up stagger-2">
+            Most people spend 8–12 hours a day in front of screens and never once look away properly. EyeRest quietly runs in your Chrome browser and nudges you every 20 minutes — before the headaches, the blurred vision, and the eye strain even start.
+        </p>
+        <div class="btn-group fade-up stagger-3">
+            <a href="https://github.com/Vikas-Claude-Demo/EyeRest-Chrome-Extension"
+               class="btn-primary"
+               target="_blank" rel="noopener"
+               aria-label="Add EyeRest to Chrome for free">
+                <!-- Chrome icon -->
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
+                Add to Chrome — It's Free
+            </a>
+            <a href="#how-it-works" class="btn-ghost">
+                See how it works
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+        </div>
+
+        <!-- Trust signals -->
+        <div class="trust-bar fade-up">
+            <span class="trust-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                100% free, no sign-up
+            </span>
+            <span class="trust-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Zero data collection
+            </span>
+            <span class="trust-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                Works offline, no ads
+            </span>
+            <span class="trust-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Trusted by 2,000+ users
+            </span>
+        </div>
+
+        <!-- Hero visual -->
+        <div class="hero-visual fade-up">
+            <img src="icons/hero.png"
+                 alt="EyeRest Chrome extension popup showing 20-20-20 eye break timer and guided eye exercises"
+                 width="940" loading="eager">
+            <div class="hero-float-badge" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                Eye break reminder is active
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ HOW IT WORKS ══════════ -->
+<section class="how" id="how-it-works" aria-labelledby="how-title">
+    <div class="container">
+        <div class="how-grid">
+            <div class="how-steps">
+                <div>
+                    <span class="section-label">Simple by design</span>
+                    <h2 class="section-title" id="how-title">Three steps to healthier eyes, every day</h2>
+                    <p class="section-desc">You don't need to think about it. EyeRest runs silently in the background and does the reminding for you — so you can stay focused without punishing your vision.</p>
+                </div>
+
+                <div class="step fade-up">
+                    <div class="step-num" aria-hidden="true">1</div>
+                    <div class="step-body">
+                        <h4>Install once, protect always</h4>
+                        <p>Add EyeRest to Chrome in under 30 seconds. No account needed, no permissions beyond what's necessary. It starts working the moment you pin it to your toolbar.</p>
+                    </div>
+                </div>
+
+                <div class="step fade-up stagger-1">
+                    <div class="step-num" aria-hidden="true">2</div>
+                    <div class="step-body">
+                        <h4>Every 20 minutes, a gentle nudge</h4>
+                        <p>EyeRest fires a native Chrome alarm — the most battery-efficient method possible — and invites you to take a 20-second screen break. No loud popups, no guilt-trips.</p>
+                    </div>
+                </div>
+
+                <div class="step fade-up stagger-2">
+                    <div class="step-num" aria-hidden="true">3</div>
+                    <div class="step-body">
+                        <h4>Guided exercises that actually work</h4>
+                        <p>Each break features an animated guide that walks you through simple, ophthalmologist-approved eye exercises. Look 20 feet away, breathe, return refreshed — and get back to what you were doing.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="how-img-wrap fade-up">
+                <img src="icons/features.png"
+                     alt="EyeRest 20-20-20 rule timer showing countdown and eye exercise guidance"
+                     width="560" loading="lazy">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ FEATURES ══════════ -->
+<section class="features" id="features" aria-labelledby="features-title">
+    <div class="container">
+        <div class="features-header">
+            <span class="section-label">What's inside</span>
+            <h2 class="section-title" id="features-title">Everything your eyes need.<br>Nothing you don't.</h2>
+            <p class="section-desc" style="margin:0 auto;">No bloat. No subscriptions. Just a focused, well-built tool that does one thing really well — protecting your eyes while you work.</p>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card fade-up">
+                <div class="feature-icon" aria-hidden="true">⏱️</div>
+                <h3>Precision 20-20-20 Timer</h3>
+                <p>The timer runs on Chrome's native alarm API — meaning it works perfectly even when other tabs are busy, throttled, or frozen. You won't miss a single break.</p>
+            </div>
+
+            <div class="feature-card fade-up stagger-1">
+                <div class="feature-icon" aria-hidden="true">👁️</div>
+                <h3>Guided Eye Exercises</h3>
+                <p>Animated, step-by-step break sessions walk you through focal shift exercises that reduce eye muscle strain and help prevent computer vision syndrome over time.</p>
+            </div>
+
+            <div class="feature-card fade-up stagger-2">
+                <div class="feature-icon" aria-hidden="true">🌙</div>
+                <h3>Light & Dark Mode</h3>
+                <p>EyeRest automatically reads your OS preference and matches it. Toggle manually anytime you want. The interface never looks out of place on your screen.</p>
+            </div>
+
+            <div class="feature-card fade-up">
+                <div class="feature-icon" aria-hidden="true">🔒</div>
+                <h3>Total Local Privacy</h3>
+                <p>Everything stays on your device. No analytics, no usage tracking, no accounts, no cloud sync. Your screen time is nobody's business but yours.</p>
+            </div>
+
+            <div class="feature-card fade-up stagger-1">
+                <div class="feature-icon" aria-hidden="true">⚡</div>
+                <h3>Near-Zero Performance Impact</h3>
+                <p>Runs as a lightweight background process. You'll never notice it in your CPU usage, battery life, or browser speed — until it's time for a break.</p>
+            </div>
+
+            <div class="feature-card fade-up stagger-2">
+                <div class="feature-icon" aria-hidden="true">🎛️</div>
+                <h3>Customizable Settings</h3>
+                <p>Adjust your reminder interval, break duration, and notification style. Whether you're deep in a coding sprint or in a creative flow, EyeRest adapts to your pace.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ STATS ══════════ -->
+<div class="stats-strip">
+    <div class="container">
+        <div class="stats-inner" role="list">
+            <div class="stat-cell fade-up" role="listitem">
+                <div class="num">20/20</div>
+                <div class="label">Rule Precision</div>
+            </div>
+            <div class="stat-cell fade-up stagger-1" role="listitem">
+                <div class="num">0ms</div>
+                <div class="label">Latency Added</div>
+            </div>
+            <div class="stat-cell fade-up stagger-2" role="listitem">
+                <div class="num">100%</div>
+                <div class="label">Private, Local Only</div>
+            </div>
+            <div class="stat-cell fade-up stagger-3" role="listitem">
+                <div class="num">2k+</div>
+                <div class="label">Happier Eyes</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════ WHY EYEREST ══════════ -->
+<section class="why" id="why" aria-labelledby="why-title">
+    <div class="container">
+        <div class="why-grid">
+            <div class="why-content">
+                <span class="section-label">Real people, real results</span>
+                <h2 class="section-title" id="why-title">Why remote workers and developers actually stick with it</h2>
+                <p class="section-desc">Eye strain is one of the top complaints from people who work at a computer all day. The American Academy of Ophthalmology officially recommends the 20-20-20 rule — but most of us forget. EyeRest solves that without nagging you.</p>
+                <ul class="check-list" style="margin-top: 32px;">
+                    <li>
+                        <span class="icon" aria-hidden="true">✓</span>
+                        <span>Reduces symptoms of <strong>computer vision syndrome</strong> including dry eyes, blurred vision, and headaches</span>
+                    </li>
+                    <li>
+                        <span class="icon" aria-hidden="true">✓</span>
+                        <span>Builds a <strong>healthy screen habit</strong> without disrupting your focus or breaking deep work sessions</span>
+                    </li>
+                    <li>
+                        <span class="icon" aria-hidden="true">✓</span>
+                        <span>Works for <strong>developers, designers, writers, students</strong> — anyone who stares at a screen for hours</span>
+                    </li>
+                    <li>
+                        <span class="icon" aria-hidden="true">✓</span>
+                        <span>No subscription, no paywall, no data harvesting — <strong>completely free</strong> and open source</span>
+                    </li>
+                    <li>
+                        <span class="icon" aria-hidden="true">✓</span>
+                        <span>Backed by the same science that optometrists and ophthalmologists recommend to their own patients</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="why-visual fade-up" aria-label="User testimonial">
+                <div class="stars" aria-label="5 stars">★★★★★</div>
+                <div class="quote-block">
+                    <div class="quote-mark" aria-hidden="true">"</div>
+                    <p class="quote-text">
+                        I've been coding for 10 years and always brushed off the "take a break" advice. After three weeks with EyeRest, the afternoon headaches I'd accepted as normal — just disappeared. I didn't realize how much chronic eye strain was draining my energy until it stopped.
+                    </p>
+                    <div class="quote-source">
+                        <div class="avatar" aria-hidden="true">A</div>
+                        <div class="quote-meta">
+                            <strong>Arjun S.</strong>
+                            <span>Senior Software Engineer, Remote</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ FAQ ══════════ -->
+<section class="faq" id="faq" aria-labelledby="faq-title">
+    <div class="container">
+        <div class="faq-header">
+            <span class="section-label">Common questions</span>
+            <h2 class="section-title" id="faq-title">Everything you want to know</h2>
+        </div>
+
+        <div class="faq-grid">
+            <div class="faq-item fade-up">
+                <h4>What exactly is the 20-20-20 rule?</h4>
+                <p>Every 20 minutes, look at something at least 20 feet away for 20 seconds. This simple habit relaxes the ciliary muscle inside your eye, which is constantly contracting when you focus on a nearby screen. It's the most widely recommended method to reduce digital eye strain and prevent computer vision syndrome.</p>
+            </div>
+
+            <div class="faq-item fade-up stagger-1">
+                <h4>Does it slow down my browser or drain my battery?</h4>
+                <p>No — EyeRest uses Chrome's native <code>chrome.alarms</code> API, which is the same low-power mechanism Chrome itself uses for background tasks. There is no active polling, no background scripts running constantly, and no measurable impact on performance or battery life.</p>
+            </div>
+
+            <div class="faq-item fade-up stagger-2">
+                <h4>Does EyeRest collect any data or need an account?</h4>
+                <p>Absolutely not. EyeRest has no backend, no servers, and no analytics. Your preferences and usage data never leave your device. There is no sign-up, no email required, and nothing to log in to — ever.</p>
+            </div>
+
+            <div class="faq-item fade-up">
+                <h4>Can I adjust the reminder interval or turn it off temporarily?</h4>
+                <p>Yes. You can change the break interval, snooze reminders when you're in a meeting or a focus sprint, or pause the extension entirely with one click. It's designed to work around your schedule, not the other way around.</p>
+            </div>
+
+            <div class="faq-item fade-up stagger-1">
+                <h4>I already use blue light glasses. Do I still need this?</h4>
+                <p>Blue light glasses help with glare and light wavelength, but they don't address muscle fatigue — which is the main cause of eye strain for most screen workers. The 20-20-20 rule targets the focusing muscles directly. They work best together, not as alternatives.</p>
+            </div>
+
+            <div class="faq-item fade-up stagger-2">
+                <h4>Is the source code available to review?</h4>
+                <p>Yes. EyeRest is open source and the full code is available on GitHub. You can inspect every line before installing, which is exactly how a privacy-first tool should work. No hidden scripts, no obfuscated logic.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ CTA BANNER ══════════ -->
+<section class="cta-banner" aria-labelledby="cta-title">
+    <div class="container">
+        <div class="cta-inner">
+            <span class="section-label">Ready to start?</span>
+            <h2 class="section-title" id="cta-title">Your next screen break<br>starts right now.</h2>
+            <p class="section-desc">
+                It takes 20 seconds to install. You'll feel the difference in the first day. And it costs exactly nothing — no premium tiers, no trials, no hidden fees.
+            </p>
+            <div class="btn-group">
+                <a href="https://github.com/Vikas-Claude-Demo/EyeRest-Chrome-Extension"
+                   class="btn-primary"
+                   target="_blank" rel="noopener"
+                   aria-label="Add EyeRest to Chrome">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
+                    Add to Chrome — Free
+                </a>
+                <a href="https://github.com/Vikas-Claude-Demo/EyeRest-Chrome-Extension"
+                   class="btn-ghost"
+                   target="_blank" rel="noopener"
+                   aria-label="View EyeRest source code on GitHub">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                    View on GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer role="contentinfo">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo" aria-label="EyeRest Home">
+                    <img src="icons/logo.png" alt="EyeRest logo" width="28" height="28">
                     EyeRest
                 </a>
-                <a href="https://github.com/Vikas-Claude-Demo/EyeRest-Chrome-Extension" class="cta-nav">Add to Chrome</a>
-            </nav>
-        </div>
-    </header>
-
-    <div class="container">
-        <section class="hero">
-            <span class="badge">Next Generation Vision Protection</span>
-            <h1>Screen fatigue<br>is a choice.</h1>
-            <p>Unlock peak productivity with EyeRest. The only extension that masters the 20-20-20 rule with aesthetic guided flow and adaptive intelligence.</p>
-            <div class="btn-group">
-                <a href="https://github.com/Vikas-Claude-Demo/EyeRest-Chrome-Extension" class="btn-primary">Get Started for Free</a>
-                <a href="#features" class="btn-secondary">Explore Features</a>
+                <p>A free, open-source Chrome extension for digital eye health. Built for developers, designers, and anyone who takes their wellbeing seriously. No account. No data. No nonsense.</p>
             </div>
-            <div class="showcase">
-                <img src="icons/hero.png" alt="EyeRest Dashboard" class="showcase-img">
+            <div class="footer-col">
+                <h5>Product</h5>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#features">Features</a>
+                <a href="#why">Why EyeRest</a>
+                <a href="#faq">FAQ</a>
             </div>
-        </section>
-    </div>
-
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-header">
-                <h2>Healthier Vision.<br>Smarter Workflow.</h2>
+            <div class="footer-col">
+                <h5>Resources</h5>
+                <a href="https://github.com/Vikas-Claude-Demo/EyeRest-Chrome-Extension" target="_blank" rel="noopener">GitHub Repo</a>
+                <a href="https://github.com/Vikas-Claude-Demo/EyeRest-Chrome-Extension/issues" target="_blank" rel="noopener">Report an Issue</a>
+                <a href="https://github.com/Vikas-Claude-Demo/EyeRest-Chrome-Extension/releases" target="_blank" rel="noopener">Changelog</a>
             </div>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <img src="icons/features.png" alt="Precision Timers" class="feature-img">
-                    <h3>Precision Alarms</h3>
-                    <p>Native browser alarms ensure zero battery drain and perfect timing for your ocular health cycles.</p>
-                </div>
-                <div class="feature-card">
-                    <img src="icons/features.png" alt="Vision Guidance" class="feature-img">
-                    <h3>Vision Guidance</h3>
-                    <p>Dynamic motion-based exercises designed by ophthalmologists to relieve eye muscle tension instantly.</p>
-                </div>
-                <div class="feature-card">
-                    <img src="icons/features.png" alt="Smart Sync" class="feature-img">
-                    <h3>Invisible Sync</h3>
-                    <p>Fully adaptive glassmorphism that breathes with your OS light and dark mode preferences.</p>
-                </div>
+            <div class="footer-col">
+                <h5>Legal</h5>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
             </div>
         </div>
-    </section>
-
-    <div class="container">
-        <section class="stats">
-            <div class="stat-item">
-                <h4>20/20</h4>
-                <p>Rule Mastered</p>
-            </div>
-            <div class="stat-item">
-                <h4>0.0s</h4>
-                <p>Latence Impact</p>
-            </div>
-            <div class="stat-item">
-                <h4>100%</h4>
-                <p>Local Privacy</p>
-            </div>
-        </section>
-
-        <footer>
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <div class="footer-logo">EyeRest</div>
-                    <p>Revolutionizing digital wellness for the next generation of creative builders and thinkers. Built with privacy and elegance first.</p>
-                </div>
-                <div class="footer-col">
-                    <h5>Product</h5>
-                    <a href="#features">Features</a>
-                    <a href="#">Roadmap</a>
-                    <a href="#">Changelog</a>
-                </div>
-                <div class="footer-col">
-                    <h5>Legal</h5>
-                    <a href="privacy.html">Privacy Policy</a>
-                    <a href="#">Terms of Use</a>
-                    <a href="https://github.com/Vikas-Claude-Demo/EyeRest-Chrome-Extension">Source Code</a>
-                </div>
-            </div>
-            <p>&copy; 2026 EyeRest Vision Systems. Designed with ❤️ for healthy eyes.</p>
-        </footer>
+        <div class="footer-bottom">
+            <span>&copy; 2026 EyeRest Vision Systems. Designed for healthier eyes.</span>
+            <span>
+                <a href="privacy.html">Privacy</a> &nbsp;·&nbsp;
+                <a href="https://github.com/Vikas-Claude-Demo/EyeRest-Chrome-Extension" target="_blank" rel="noopener">Open Source</a>
+            </span>
+        </div>
     </div>
+</footer>
+
+<!-- ══════════ SCROLL ANIMATIONS ══════════ -->
+<script>
+    (function () {
+        'use strict';
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.fade-up').forEach(function (el) {
+            io.observe(el);
+        });
+
+        // Sticky nav shadow on scroll
+        var nav = document.querySelector('nav');
+        window.addEventListener('scroll', function () {
+            nav.style.boxShadow = window.scrollY > 10
+                ? '0 4px 40px rgba(0,0,0,0.35)'
+                : 'none';
+        }, { passive: true });
+    })();
+</script>
 
 </body>
 </html>

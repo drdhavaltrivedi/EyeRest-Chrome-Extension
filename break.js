@@ -105,11 +105,29 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(autoChangeInterval); // stop changing exercises when done
         timerText.textContent = "\u2713"; // Checkmark
         timerProgress.style.strokeDashoffset = 0;
-        skipBtn.textContent = "Close Window";
+        
+        // Auto-close countdown
+        let closeCount = 3;
+        const updateButtonText = () => {
+          skipBtn.textContent = `Closing in ${closeCount}...`;
+        };
+        
         skipBtn.style.color = "var(--text-bright)";
         skipBtn.style.background = "var(--primary)";
         skipBtn.style.borderColor = "var(--primary)";
         skipBtn.style.boxShadow = "0 0 15px rgba(59, 130, 246, 0.5)";
+        
+        updateButtonText();
+        
+        const closeInterval = setInterval(() => {
+          closeCount--;
+          if (closeCount <= 0) {
+            clearInterval(closeInterval);
+            window.close();
+          } else {
+            updateButtonText();
+          }
+        }, 1000);
       }
     }
 

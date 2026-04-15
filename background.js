@@ -1,4 +1,5 @@
 let isBreakActive = false;
+let breakTabId = null;
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.local.get(['enabled'], (data) => {
@@ -18,12 +19,13 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 function createAlarm() {
-  // If a break is active, don't schedule a new one until it's finished
+  // If a break is already active on screen, do not schedule the next one yet.
   if (isBreakActive) return;
 
   chrome.storage.local.get(['enabled', 'interval'], (data) => {
     chrome.alarms.clear("breakAlarm");
     if (data.enabled) {
+      // delayInMinutes takes a float, so this is precise.
       chrome.alarms.create("breakAlarm", { delayInMinutes: data.interval || 20 });
     }
   });
@@ -45,6 +47,16 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "breakFinished") {
     isBreakActive = false;
+    breakTabId = null;
+    createAlarm();
+  }
+});
+
+// Safeguard: If user manually closes the tab, restart the timer
+chrome.tabs.onRemoved.addListener((tabId) => {
+  if (tabId === breakTabId) {
+    isBreakActive = false;
+    breakTabId = null;
     createAlarm();
   }
 });
@@ -61,7 +73,9 @@ function triggerBreak() {
     }
     
     if (data.showExercises) {
-      chrome.tabs.create({ url: chrome.runtime.getURL("break.html") });
+      chrome.tabs.create({ url: chrome.runtime.getURL("break.html") }, (tab) => {
+        breakTabId = tab.id;
+      });
     } else {
       isBreakActive = false;
       createAlarm();

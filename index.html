@@ -3,34 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="EyeRest is the high-end 20-20-20 eye care reminder and screen time tracker. Protect your vision with guided exercises and a stunning interface.">
-    <meta name="keywords" content="20-20-20 rule, eye care, eye protection, screen time tracker, vision care, productivity timer, rest reminder">
-    <title>EyeRest — The Ultimate Eye Protection for Modern Professionals</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@200;400;500;700&display=swap" rel="stylesheet">
+    <meta name="description" content="EyeRest is a premium 20-20-20 eye care reminder and screen time tracker. Protect your vision from digital eye strain with guided eye exercises and smart break reminders.">
+    <meta name="keywords" content="20-20-20 rule, eye care, eye protection, screen time tracker, digital eye strain relief, productivity timer, vision care extension, blue light awareness, computer vision syndrome, rest reminder">
+    <title>EyeRest - Premium 20-20-20 Eye Care & Screen Time Tracker</title>
     <style>
         :root {
-            --primary: #58a6ff;
-            --accent: #2ea043;
-            --bg: #010409;
-            --bg-secondary: #0d1117;
-            --text-main: #8b949e;
-            --text-bright: #f0f6fc;
-            --card-glass: rgba(22, 27, 34, 0.8);
-            --border: rgba(240, 246, 252, 0.1);
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --bg: #0b0f19;
+            --card-bg: #161b22;
+            --text-main: #94a3b8;
+            --text-bright: #f8fafc;
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         @media (prefers-color-scheme: light) {
             :root {
-                --primary: #0969da;
-                --accent: #1a7f37;
-                --bg: #f6f8fa;
-                --bg-secondary: #ffffff;
-                --text-main: #57606a;
-                --text-bright: #24292f;
-                --card-glass: rgba(255, 255, 255, 0.9);
-                --border: rgba(31, 35, 40, 0.1);
+                --primary: #3b82f6;
+                --primary-dark: #2563eb;
+                --bg: #f8fafc;
+                --card-bg: #ffffff;
+                --text-main: #475569;
+                --text-bright: #0f172a;
+                --border: rgba(0, 0, 0, 0.1);
             }
         }
 
@@ -38,40 +33,23 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg);
             color: var(--text-main);
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        h1, h2, h3, .logo {
-            font-family: 'Outfit', sans-serif;
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* Header & Nav */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            backdrop-filter: blur(12px);
-            background: var(--card-glass);
-            border-bottom: 1px solid var(--border);
+            padding: 0 20px;
         }
 
         nav {
-            height: 80px;
+            padding: 40px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -87,316 +65,145 @@
             text-decoration: none;
         }
 
-        .logo-symbol {
-            width: 36px;
-            height: 36px;
-            background: var(--primary);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 20px;
+        .logo img {
+            width: 40px;
+            height: 40px;
         }
 
-        .cta-nav {
-            background: var(--primary);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 100px;
+        .nav-links a {
+            color: var(--text-main);
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: 0.3s;
+            margin-left: 20px;
+            transition: color 0.2s;
         }
 
-        .cta-nav:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-
-        /* Hero */
-        .hero {
-            padding: 180px 0 120px;
-            text-align: center;
-            position: relative;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(88, 166, 255, 0.1) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 6px 16px;
-            background: rgba(88, 166, 255, 0.1);
+        .nav-links a:hover {
             color: var(--primary);
-            border-radius: 100px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 24px;
+        }
+
+        .hero {
+            padding: 100px 0;
+            text-align: center;
         }
 
         h1 {
-            font-size: 4.5rem;
-            font-weight: 800;
+            font-size: 3.5rem;
             color: var(--text-bright);
-            line-height: 1.1;
-            letter-spacing: -3px;
             margin-bottom: 24px;
+            line-height: 1.2;
         }
 
-        .hero p {
-            font-size: 1.35rem;
-            max-width: 700px;
-            margin: 0 auto 48px;
-            color: var(--text-main);
+        .subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: #fff;
-            padding: 18px 40px;
-            border-radius: 14px;
+        .btn {
+            display: inline-block;
+            padding: 16px 32px;
+            background-color: var(--primary);
+            color: white;
             text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
-            transition: 0.3s;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3);
-        }
-
-        .btn-secondary {
-            border: 1px solid var(--border);
-            color: var(--text-bright);
-            padding: 18px 40px;
-            border-radius: 14px;
-            text-decoration: none;
+            border-radius: 12px;
             font-weight: 600;
-            font-size: 1.1rem;
-            transition: 0.3s;
+            transition: background-color 0.2s;
         }
 
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.05);
+        .btn:hover {
+            background-color: var(--primary-dark);
         }
 
-        /* Features */
         .features {
-            padding: 140px 0;
-            background: var(--bg-secondary);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .section-header h2 {
-            font-size: 3rem;
-            color: var(--text-bright);
-            letter-spacing: -2px;
-        }
-
-        .feature-grid {
+            padding: 100px 0;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
         }
 
         .feature-card {
+            background: var(--card-bg);
             padding: 40px;
-            border-radius: 24px;
-            background: var(--bg);
+            border-radius: 20px;
             border: 1px solid var(--border);
-            transition: 0.3s;
+            text-align: center;
         }
 
-        .feature-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-10px);
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
         }
 
         .feature-card h3 {
-            font-size: 1.5rem;
             color: var(--text-bright);
             margin-bottom: 16px;
         }
 
-        /* Stats */
-        .stats {
-            padding: 100px 0;
-            display: flex;
-            justify-content: space-around;
-            text-align: center;
-            border-top: 1px solid var(--border);
-        }
-
-        .stat-item h4 {
-            font-size: 3.5rem;
-            color: var(--text-bright);
-            font-weight: 800;
-        }
-
-        .stat-item p {
-            color: var(--primary);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-
-        /* Footer */
         footer {
-            padding: 100px 0;
-            color: var(--text-main);
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
         }
 
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 80px;
-            margin-bottom: 60px;
-        }
-
-        .footer-logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--text-bright);
+        .footer-links {
             margin-bottom: 20px;
         }
 
-        .footer-col h5 {
-            color: var(--text-bright);
-            font-size: 1rem;
-            margin-bottom: 24px;
-        }
-
-        .footer-col a {
-            display: block;
+        .footer-links a {
             color: var(--text-main);
             text-decoration: none;
-            margin-bottom: 12px;
-            transition: 0.2s;
-        }
-
-        .footer-col a:hover {
-            color: var(--primary);
-        }
-
-        @media (max-width: 1024px) {
-            h1 { font-size: 3.5rem; }
-            .feature-grid { grid-template-columns: 1fr; }
+            margin: 0 10px;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo">
-                    <img src="icons/logo.png" alt="EyeRest Logo">
-                    EyeRest
-                </a>
-                <a href="https://github.com/Vikas-Claude-Demo/EyeRest-Chrome-Extension" class="cta-nav">Add to Chrome</a>
-            </nav>
-        </div>
-    </header>
-
     <div class="container">
+        <nav>
+            <a href="#" class="logo">
+                <img src="icons/logo.png" alt="EyeRest Logo">
+                EyeRest
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="https://github.com/Vikas-Claude-Demo/EyeRest-Chrome-Extension">GitHub</a>
+            </div>
+        </nav>
+
         <section class="hero">
-            <span class="badge">Next Generation Vision Protection</span>
-            <h1>Screen fatigue<br>is a choice.</h1>
-            <p>Unlock peak productivity with EyeRest. The only extension that masters the 20-20-20 rule with aesthetic guided flow and adaptive intelligence.</p>
-            <div class="btn-group">
-                <a href="https://github.com/Vikas-Claude-Demo/EyeRest-Chrome-Extension" class="btn-primary">Get Started for Free</a>
-                <a href="#features" class="btn-secondary">Explore Features</a>
-            </div>
+            <h1>Rest Your Eyes,<br>Boost Your Focus.</h1>
+            <p class="subtitle">Combat screen fatigue with the science-backed 20-20-20 rule. Beautiful reminders and guided exercises for a healthier digital life.</p>
+            <a href="https://github.com/Vikas-Claude-Demo/EyeRest-Chrome-Extension" class="btn">Add to Chrome — It's Free</a>
         </section>
-    </div>
 
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-header">
-                <h2>Healthier Vision.<br>Smarter Workflow.</h2>
+        <section class="features" id="features">
+            <div class="feature-card">
+                <span class="feature-icon">⏱️</span>
+                <h3>Precision Timers</h3>
+                <p>Native browser alarms ensure zero battery drain and perfect timing for your ocular health cycles.</p>
             </div>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <img src="icons/features.png" alt="Precision Timers" class="feature-img">
-                    <h3>Precision Alarms</h3>
-                    <p>Native browser alarms ensure zero battery drain and perfect timing for your ocular health cycles.</p>
-                </div>
-                <div class="feature-card">
-                    <img src="icons/features.png" alt="Vision Guidance" class="feature-img">
-                    <h3>Vision Guidance</h3>
-                    <p>Dynamic motion-based exercises designed by ophthalmologists to relieve eye muscle tension instantly.</p>
-                </div>
-                <div class="feature-card">
-                    <img src="icons/features.png" alt="Smart Sync" class="feature-img">
-                    <h3>Invisible Sync</h3>
-                    <p>Fully adaptive glassmorphism that breathes with your OS light and dark mode preferences.</p>
-                </div>
+            <div class="feature-card">
+                <span class="feature-icon">🧘‍♂️</span>
+                <h3>Vision Guidance</h3>
+                <p>Dynamic motion-based exercises designed by specialists to relieve eye muscle tension instantly.</p>
             </div>
-        </div>
-    </section>
-
-    <div class="container">
-        <section class="stats">
-            <div class="stat-item">
-                <h4>20/20</h4>
-                <p>Rule Mastered</p>
-            </div>
-            <div class="stat-item">
-                <h4>0.0s</h4>
-                <p>Latence Impact</p>
-            </div>
-            <div class="stat-item">
-                <h4>100%</h4>
-                <p>Local Privacy</p>
+            <div class="feature-card">
+                <span class="feature-icon">🌗</span>
+                <h3>Invisible Sync</h3>
+                <p>Fully adaptive UI that breathes with your OS light and dark mode preferences.</p>
             </div>
         </section>
 
         <footer>
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <div class="footer-logo">EyeRest</div>
-                    <p>Revolutionizing digital wellness for the next generation of creative builders and thinkers. Built with privacy and elegance first.</p>
-                </div>
-                <div class="footer-col">
-                    <h5>Product</h5>
-                    <a href="#features">Features</a>
-                    <a href="#">Roadmap</a>
-                    <a href="#">Changelog</a>
-                </div>
-                <div class="footer-col">
-                    <h5>Legal</h5>
-                    <a href="privacy.html">Privacy Policy</a>
-                    <a href="#">Terms of Use</a>
-                    <a href="https://github.com/Vikas-Claude-Demo/EyeRest-Chrome-Extension">Source Code</a>
-                </div>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="https://github.com/Vikas-Claude-Demo/EyeRest-Chrome-Extension">Source Code</a>
             </div>
-            <p>&copy; 2026 EyeRest Vision Systems. Designed with ❤️ for healthy eyes.</p>
+            <p>&copy; 2026 EyeRest Vision Systems. Designed for healthy eyes.</p>
         </footer>
     </div>
 

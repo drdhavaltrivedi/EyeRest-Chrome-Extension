@@ -1,3 +1,5 @@
+let isBreakActive = false;
+
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.local.get(['enabled'], (data) => {
     if (data.enabled === undefined) {
@@ -16,6 +18,9 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 function createAlarm() {
+  // If a break is active, don't schedule a new one until it's finished
+  if (isBreakActive) return;
+
   chrome.storage.local.get(['enabled', 'interval'], (data) => {
     chrome.alarms.clear("breakAlarm");
     if (data.enabled) {
@@ -32,13 +37,14 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 
 chrome.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === "breakAlarm") {
+    isBreakActive = true;
     triggerBreak();
-    // Do NOT create next alarm here. Wait for message from break window.
   }
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "breakFinished") {
+    isBreakActive = false;
     createAlarm();
   }
 });
@@ -57,7 +63,7 @@ function triggerBreak() {
     if (data.showExercises) {
       chrome.tabs.create({ url: chrome.runtime.getURL("break.html") });
     } else {
-      // If not showing exercises page, restart timer immediately
+      isBreakActive = false;
       createAlarm();
     }
   });
